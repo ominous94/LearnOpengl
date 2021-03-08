@@ -1,0 +1,7 @@
+﻿  Building Custom Rule F:/VirtualBox/ShareFolder/glfw-3.3.2/examples/CMakeLists.txt
+  particles.c
+  tinycthread.c
+  getopt.c
+  glad_gl.c
+  正在生成代码...
+  particles.vcxproj -> F:\VirtualBox\ShareFolder\build\examples\Debug\particles.exe

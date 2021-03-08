@@ -1,0 +1,10 @@
+^F:\VIRTUALBOX\SHAREFOLDER\GLFW-3.3.2\SRC\CMAKELISTS.TXT
+setlocal
+F:\VirtualBox\ShareFolder\cmake-3.19.4-win64-x64\bin\cmake.exe -SF:/VirtualBox/ShareFolder/glfw-3.3.2 -BF:/VirtualBox/ShareFolder/build --check-stamp-file F:/VirtualBox/ShareFolder/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
