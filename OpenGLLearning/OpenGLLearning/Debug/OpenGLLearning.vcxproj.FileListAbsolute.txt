@@ -1,2 +1,4 @@
 F:\VirtualBox\ShareFolder\OpenGLLearning\OpenGLLearning\Debug\OpenGLLearning.exe
 F:\VirtualBox\ShareFolder\OpenGLLearning\OpenGLLearning\Debug\OpenGLLearning.pdb
+H:\GitHub\LearnOpengl\OpenGLLearning\OpenGLLearning\Debug\OpenGLLearning.exe
+H:\GitHub\LearnOpengl\OpenGLLearning\OpenGLLearning\Debug\OpenGLLearning.pdb
