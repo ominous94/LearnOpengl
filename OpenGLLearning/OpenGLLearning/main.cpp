@@ -40,24 +40,43 @@ int main()
     }
 
     //shader program
-    Shader outShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
+    Shader ourShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
 
 #pragma region image
     //image
     int width, height, nrChannels;
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    unsigned int texture1;
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     //设置当前绑定纹理对象的环绕和过滤方式
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+    stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load("image/container.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    unsigned int texture2;
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    data = stbi_load("image/awesomeface.png", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -96,12 +115,22 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+    //位置属性
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    //颜色属性
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    //uv属性
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindVertexArray(0);
 
-    glBindVertexArray(0);
+    ourShader.use();
+    ourShader.setInt("Texture0", 0);
+    ourShader.setInt("Texture1", 1);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -109,9 +138,12 @@ int main()
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
 
-        outShader.use();
+        ourShader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         //glDrawArrays(GL_TRIANGLES, 0, 6); 

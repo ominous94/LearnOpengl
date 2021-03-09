@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\VirtualBox\ShareFolder\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\VirtualBox\ShareFolder\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\Github\LearnOpengl\include;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\Github\LearnOpengl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
