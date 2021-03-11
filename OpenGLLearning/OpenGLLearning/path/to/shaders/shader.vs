@@ -7,12 +7,14 @@ out vec3 ourColor;
 out vec2 TexCoord;
 //out vec4 vertexColor; // 为片段着色器指定一个颜色输出
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-    gl_Position = transform * vec4(aPos, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
-    //vertexColor = vec4(0.5, 0.0, 0.0, 1.0); // 把输出变量设置为暗红色
+    //gl_Position = transform * vec4(aPos, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
     ourColor = aColor;
     TexCoord = vec2(aTexCoord.x,aTexCoord.y);
 }
